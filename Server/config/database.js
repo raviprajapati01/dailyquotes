@@ -1,15 +1,21 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-function connect(){
-    // const MongoUrl = process.env.MONGODB_URL
-    mongoose.connect(process.env.MONGODB_URL)
-    .then(()=>{
-        console.log("Database connect successfully")
-    }).catch((error)=>{
-        console.log("Database connection failed");
+dotenv.config();
+
+async function connect() {
+    try {
+        await mongoose.connect(process.env.MONGODB_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            // useCreateIndex: true,
+        });
+        console.log("Database connected successfully");
+    } catch (error) {
+        console.error("Database connection failed");
         console.error(error);
         process.exit(1);
-    })
+    }
 }
 
 export default connect;
